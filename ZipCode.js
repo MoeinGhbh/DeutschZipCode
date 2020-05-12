@@ -123,7 +123,7 @@ textarea {
       fetch("https://www.postdirekt.de/plzserver/PlzAjaxServlet?autocomplete=plz&plz_city=" + x, {
           method: 'get'
         })
-         .then((response) => {
+        .then((response) => {
           return response.json().then((data) => {
             const mydata = data
             var i = 0;
@@ -139,45 +139,51 @@ textarea {
           })
         }).then(
 
-            (res)=>{
+          (res) => {
 
 
 
-              if (city.value!="")
-              {
+            if (city.value != "") {
 
-          var alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü'];
-          for (var j = 0; j < alphabets.length; j++) {
-            fetch("https://www.postdirekt.de/plzserver/PlzAjaxServlet?autocomplete=street&plz_city=" + city.value + "&plz_plz=" + zip.value + "&plz_district=&plz_street=" + alphabets[j], {
-              method: 'get'
-            }).then((response) => {
-              return response.json().then((data) => {
-                const mydata = data
-                var addStreet = this.shadowRoot.querySelector('#street');
-                for (var r = 0; r < data["rows"].length; r++) {
+              var alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü'];
+              for (var j = 0; j < alphabets.length; j++) {
+                fetch("https://www.postdirekt.de/plzserver/PlzAjaxServlet?autocomplete=street&plz_city=" + city.value + "&plz_plz=" + zip.value + "&plz_district=&plz_street=" + alphabets[j], {
+                  method: 'get'
+                }).then((response) => {
+                  return response.json().then((data) => {
+                    const mydata = data
+                    var addStreet = this.shadowRoot.querySelector('#street');
+                    for (var r = 0; r < data["rows"].length; r++) {
 
-                    console.log(addStreet.options.length)
-                    console.log(addStreet.options[0])
+                      var find=0
+                      for (var k=0;k<addStreet.options.length;k++){
+                          console.log(addStreet.options[k].text)
+                          if(addStreet.options[k].text==data["rows"][r]["street"])
+                          {
+                            find=1
+                          }
+                      }
+                      if(find==0){
+                        addStreet.options[addStreet.options.length] = new Option(data["rows"][r]["street"], data["rows"][r]["street"]);
+                      }
+                    }
+                  })
+                })
+              }
 
-                  addStreet.options[addStreet.options.length] = new Option(data["rows"][r]["street"], data["rows"][r]["street"]);
-                }
-              })
-            })
+            }
+
           }
 
-        }
+        )
 
-      }
-            
-          )
-         
-    //     .catch(function (error) {
-    //       console.log(error)
-    //     })
+      //     .catch(function (error) {
+      //       console.log(error)
+      //     })
     }
 
 
-  
+
   }
 
 
