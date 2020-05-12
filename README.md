@@ -4,7 +4,7 @@
 
 
 ---
-    * upm install
+    * npm install
 
     * npm install lit-html
     * npm install polymer-cli --dev
