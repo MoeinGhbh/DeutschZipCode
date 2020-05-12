@@ -3,7 +3,6 @@ import {
   render
 } from 'lit-html';
 
-
 class ZipCode extends HTMLElement {
 
   constructor() {
@@ -15,8 +14,6 @@ class ZipCode extends HTMLElement {
     const zipcodetemplate = html ` <input type="text" pattern="[0-9]*" name="zip" id="zip"  >`
     const citytemplate = html `   <input type="text" name="city" id="city">`
     const streettemplate = html `  <select id="street" name="street" ></select>`
-
-
     const template = html `
 
 <style>
@@ -57,28 +54,18 @@ textarea {
 }
 </style>
 
-
-
-
-
 <div id="top">
-
 <form id="myForm" action="#" class="fancy-form">
-
 <fieldset>
 <legend>Address</legend>
-
 <table>
 <tr>
     <td>
-   
         <div class="zip-wrap">
             <label for="zip-1">Zip</label>
            ${zipcodetemplate}
-           
         </div>
     </td>
-
     <td>
       <div class="city-wrap">
         <label for="city">City</label> 
@@ -100,7 +87,6 @@ textarea {
             </div>
         </td>
       </tr>
-
   <tr>
       <td colspan="2">
             <div class="country-wrap">
@@ -109,17 +95,12 @@ textarea {
             </div>
       </td>
   </tr>
-
 </table>
 
 <div>
 <button id="toggle-info">Show Info</button>
 </div>
-
-
 </fieldset>
-
-
 </form>
 </div>
 `
@@ -146,13 +127,11 @@ textarea {
         .then((response) => {
           return response.json().then((data) => {
             const mydata = data
-            // console.log(data)
             var i = 0;
             var len = data["rows"].length;
             for (; i < len;) {
               if ((data["rows"][i]["plz"]).split(/([0-9]+)/)[1] == String(zip.value).slice(0, (data["rows"][i]["plz"]).split(/([0-9]+)/)[1].length)) {
                 city.value = data["rows"][i]["city"]
-                cityName = data["rows"][i]["city"]
                 break;
               }
               i++;
@@ -167,25 +146,13 @@ textarea {
 
 
     var alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü'];
-    var x;
-
     for (var j = 0; j < alphabets.length; j++) {
-      console.log(cityName, 'ssssssssssssssssss')
-      console.log("https://www.postdirekt.de/plzserver/PlzAjaxServlet?autocomplete=street&plz_city=" + city.value + "&plz_plz=" + zip.value + "&plz_district=&plz_street=" + alphabets[j])
       fetch("https://www.postdirekt.de/plzserver/PlzAjaxServlet?autocomplete=street&plz_city=" + city.value + "&plz_plz=" + zip.value + "&plz_district=&plz_street=" + alphabets[j], {
         method: 'get'
       }).then((response) => {
         return response.json().then((data) => {
           const mydata = data
-          console.log(data, 'second')
-          console.log(zip.value)
-
-
-
-
           var addStreet = this.shadowRoot.querySelector('#street');
-
-
           for (var r = 0; r < data["rows"].length; r++) {
             addStreet.options[addStreet.options.length] = new Option(data["rows"][r]["street"], data["rows"][r]["street"]);
           }
