@@ -5,4 +5,4 @@
 
 ---
 
-npx polymer serve
+    * npx polymer serve
