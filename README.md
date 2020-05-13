@@ -7,6 +7,7 @@
 
     * npm install lit-html
     * npm install polymer-cli --dev
+    
     * npx polymer serve
 
 ---
